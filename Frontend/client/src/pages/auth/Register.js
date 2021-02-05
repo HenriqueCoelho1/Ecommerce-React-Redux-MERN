@@ -18,7 +18,7 @@ const Register  = () => {
         toast.success(`A validation is send to your ${email}. 
         Click the link to complete your registration!`
         )
-        window.localStorage.setItem('emailForRegistration', email)
+        window.localStorage.setItem('emailFormRegistration', email)
 
         setEmail("")
 
@@ -33,7 +33,7 @@ const Register  = () => {
         >
         </input>
 
-        <button type="submit" class="btn btn-raised">
+        <button type="submit" className="btn btn-raised">
             Register
         </button>
         </form>
