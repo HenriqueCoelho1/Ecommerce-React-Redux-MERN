@@ -1,56 +1,83 @@
-import React, {useState} from 'react'
-import {auth} from "../../firebase"
-import {toast} from 'react-toastify'
-import {Button} from 'antd'
+import React, { useState } from 'react'
+import { auth } from "../../firebase"
+import { toast } from 'react-toastify'
+import { Button } from 'antd'
 import { MailOutlined } from "@ant-design/icons";
+import { useDispatch } from 'react-redux'
 
 
-const Login  = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+const Login = ({history}) => {
+    const [email, setEmail] = useState("megawats.oitavo@gmail.com")
+    const [password, setPassword] = useState("123456")
+    const [loading, setLoading] = useState(false)
+
+    let dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.table(email, password)
+        setLoading(true)
+        // console.table(email, password)
+        try {
+            const result = await auth.signInWithEmailAndPassword(email, password)
+            // console.log(result)
+            const { user } = result
+            const idTokenResult = await user.getIdTokenResult()
+
+            dispatch({
+                type: 'LOGGED_IN_USER',
+                payload: {
+                    email: user.email,
+                    token: idTokenResult.token
+                }
+            })
+            history.push('/')
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+            setLoading(false)
+
+        }
     }
+
     const loginForm = () => <form onSubmit={handleSubmit}>
         <div className="form-group">
-            <input 
-            type="email" 
-            className="form-control" 
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            autoFocus
-            placeholder="Type your email here!"
+            <input
+                type="email"
+                className="form-control"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                autoFocus
+                placeholder="Type your email here!"
             />
         </div>
 
         <div className="form-group">
-            <input 
-            type="password" 
-            className="form-control" 
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Type your password here!"
+            <input
+                type="password"
+                className="form-control"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Type your password here!"
             />
 
             <br />
         </div>
 
         <Button
-        onClick={handleSubmit} 
-        icon={<MailOutlined/>} 
-        type="primary" 
-        className="mb-3"
-        block
-        shape="round"
-        size="large"
-        disabled={!email || password.length < 6}
+            onClick={handleSubmit}
+            icon={<MailOutlined />}
+            type="primary"
+            className="mb-3"
+            block
+            shape="round"
+            size="large"
+            disabled={!email || password.length < 6}
         >
             Login With Email/Password
         </Button>
-        </form>
-    
+    </form>
+
     return (
         <div className="container p-5">
             <div className="row">
