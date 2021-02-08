@@ -2,12 +2,10 @@ const express = require('express')
 
 const router = express.Router()
 
+const {createOrUpdateUser} = require('../controllers/auth')
+
 //route
-router.get('/create-or-update-user', (req, res) => {
-    res.json({
-        data: 'Hey you hit the create-or-update-user endpoint'
-    })
-})
+router.get('/create-or-update-user', createOrUpdateUser)
 
 
 module.exports = router
