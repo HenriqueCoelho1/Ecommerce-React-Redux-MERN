@@ -14,4 +14,4 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, console.log(`Server Running on Port 5000 ${process.env.NODE.ENV} on port ${PORT}`))
+app.listen(PORT, console.log(`Server Running on Port 5000 ${process.env.NODE_ENV} on port ${PORT}`))
