@@ -12,7 +12,7 @@ const RegisterScreen = () => {
 
 
 
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('megawats')
     return (
         <Container className='p-5'>
             <Row>
