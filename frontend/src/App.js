@@ -4,12 +4,14 @@ import { Container } from 'react-bootstrap'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
+import Header from './components/Header'
 
 
 
 const App = () => {
   return (
     <Router>
+      <Header />
       <main className='py-3'>
         <Container>
           <Route path='/' component={HomeScreen} exact />
